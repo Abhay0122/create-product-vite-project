@@ -6,6 +6,7 @@ function Login({ onLogin }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [errorMsg, setErrorMsg] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ function Login({ onLogin }) {
       onLogin(response.data);
       navigate('/'); // Redirect to home on successful login
     } catch (error) {
-      console.error(error);
+      setErrorMsg(error.response.data.error)
+      console.error(error.response.data.error);
       // Handle login errors (e.g., display error message)
     }
   };
@@ -81,6 +83,9 @@ function Login({ onLogin }) {
               Login
             </button>
           </div>
+        </div>
+        <div className='mt-3 text-red-400'>
+          <small>{errorMsg}</small>
         </div>
       </form>
     </div>
